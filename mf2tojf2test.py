@@ -68,7 +68,7 @@ class SpeckCheck(unittest.TestCase):
                             "A. Developer"
                           ],
                           "url": [
-                            "http:\/\/example.com\/"
+                            "http://example.com"
                           ]
                         },
                         "value": "A. Developer"
@@ -81,7 +81,7 @@ class SpeckCheck(unittest.TestCase):
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet ultrices pulvinar."
                     ],
                     "url": [
-                      "http:\/\/example.com\/2015\/10\/21"
+                      "http://example.com/2015/10/21"
                     ],
                     "published": [
                       "2015-10-21T12:00:00-0700"
