@@ -18,6 +18,26 @@ class BasicCheck(unittest.TestCase):
             "name": "Homebrew Website Club notes 2015-06-17",
             "url": "http://kevinmarks.com/hwc2015-06-17.html"
             })
+
+    def test_checkHentryTags(self):
+         self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-entry"], "properties": 
+         { "name": ["entry with tags"], "categories": ["tagged","categorised"]}}]}), 
+            {
+            "type": "entry",
+            "name": "entry with tags",
+            "categories": ["tagged","categorised"]
+            })
+
+    def test_checkHentry1Tag(self):
+         self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-entry"], "properties": 
+         { "name": ["entry with tags"], "categories": ["tagged"]}}]}), 
+            {
+            "type": "entry",
+            "name": "entry with tags",
+            "categories": ["tagged"]
+            })
+
+
     def test_checkHentryeContent(self):
          self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-entry"], "properties": 
                 {"content":[{"html":"<p>this is <b>content</b>","value":"this is content"}],

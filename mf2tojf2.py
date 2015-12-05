@@ -7,7 +7,7 @@
 import logging
 
 
-def flattenProperties(items):
+def flattenProperties(items,isOuter=False):
     if type(items) is list:
         if len(items) <1:
             return {}
@@ -24,7 +24,7 @@ def flattenProperties(items):
                         if len(children) == 1:
                             props["children"] =[flattenProperties(children)]
                         else:
-                            props["children"] =flattenProperties(children)["children"]
+                            props["children"] =flattenProperties(children)
                     return props
                
                 elif item.has_key("value"):
@@ -33,8 +33,10 @@ def flattenProperties(items):
                     return ''
             else:
                 return item
-        else:
+        elif isOuter:
             return {"children":[flattenProperties([child]) for child in items]}
+        else:
+            return [flattenProperties([child]) for child in items]
     else:
         return items #not a list, so string
     
@@ -43,6 +45,6 @@ def mf2tojf2(mf2):
     """I'm going to have to recurse here"""
     jf2={}
     items = mf2.get("items",[])
-    jf2=flattenProperties(items)
+    jf2=flattenProperties(items,isOuter=True)
     #print jf2
     return jf2
