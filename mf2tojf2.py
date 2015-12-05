@@ -8,23 +8,35 @@ import logging
 
 
 def flattenProperties(items):
-    if len(items) <1:
-        return {}
-    item = items[0]
-     
-    if type(item) is dict:
-        if item.has_key("type"):
-            props ={"type":item.get("type",["-"])[0].split("-")[1:][0]}
-            properties =  item.get("properties",{})
-            for prop in properties:
-                props[prop] = flattenProperties(properties[prop])
-            return props
-        elif item.has_key("value"):
-            return item["value"]
+    if type(items) is list:
+        if len(items) <1:
+            return {}
+        if len(items)== 1:
+            item = items[0]    
+            if type(item) is dict:
+                if item.has_key("type"):
+                    props ={"type":item.get("type",["-"])[0].split("-")[1:][0]}
+                    properties =  item.get("properties",{})
+                    for prop in properties:
+                        props[prop] = flattenProperties(properties[prop])
+                    children  =  item.get("children",[])
+                    if children:
+                        if len(children) == 1:
+                            props["children"] =[flattenProperties(children)]
+                        else:
+                            props["children"] =flattenProperties(children)["children"]
+                    return props
+               
+                elif item.has_key("value"):
+                    return item["value"]
+                else:
+                    return ''
+            else:
+                return item
         else:
-            return ''
+            return {"children":[flattenProperties([child]) for child in items]}
     else:
-        return item
+        return items #not a list, so string
     
 
 def mf2tojf2(mf2):
@@ -32,5 +44,5 @@ def mf2tojf2(mf2):
     jf2={}
     items = mf2.get("items",[])
     jf2=flattenProperties(items)
-    print mf2, jf2
+    #print jf2
     return jf2

@@ -47,6 +47,49 @@ class BasicCheck(unittest.TestCase):
                         "name":"fred bloggs",}
             })
 
+    def test_checkHfeedChildEntry(self):
+         self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-feed"], 
+         "children":[{"type":["h-entry"],"properties":{"name":["short post"]}}], "properties": 
+                {"author":[{"type":["h-card"],"properties": {"name":["fred blog"]}}],
+                 "name": ["Homebrew Website Club"]}}]}), 
+            {
+            "type": "feed",
+            "name": "Homebrew Website Club",
+            "author": {"type":"card", "name":"fred blog",},
+            "children":[
+                {"type":"entry","name":"short post"}
+                ],
+            })
+
+    def test_bareEntries(self):
+         self.assertEqual(mf2tojf2.mf2tojf2({"items":[
+                {"type":["h-entry"],"properties":{"name":["bare post"]}},
+                {"type":["h-entry"],"properties":{"name":["longer bare post"]}},
+                ]}), 
+            {
+            "children":[
+                {"type":"entry","name":"bare post"},
+                {"type":"entry","name":"longer bare post"},
+                ],
+            })
+
+    def test_checkHfeed2ChildEntry(self):
+         self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-feed"], 
+            "children":[{"type":["h-entry"],"properties":{"name":["short post"]}},
+                        {"type":["h-entry"],"properties":{"name":["longer post"]}},
+                        ], 
+            "properties": 
+                {"author":[{"type":["h-card"],"properties": {"name":["fred bloggs"]}}],
+                 "name": ["Homebrew Website Club"]}}]}), 
+            {
+            "type": "feed",
+            "name": "Homebrew Website Club",
+            "author": {"type":"card", "name":"fred bloggs",},
+            "children":[
+                {"type":"entry","name":"short post"},
+                {"type":"entry","name":"longer post"},
+                ],
+            })
 
 class SpeckCheck(unittest.TestCase):
     def test_checkExample(self):
