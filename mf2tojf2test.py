@@ -21,20 +21,20 @@ class BasicCheck(unittest.TestCase):
 
     def test_checkHentryTags(self):
          self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-entry"], "properties": 
-         { "name": ["entry with tags"], "categories": ["tagged","categorised"]}}]}), 
+         { "name": ["entry with tags"], "category": ["tagged","categorised"]}}]}), 
             {
             "type": "entry",
             "name": "entry with tags",
-            "categories": ["tagged","categorised"]
+            "category": ["tagged","categorised"]
             })
 
     def test_checkHentry1Tag(self):
          self.assertEqual(mf2tojf2.mf2tojf2({"items":[{"type": ["h-entry"], "properties": 
-         { "name": ["entry with tags"], "categories": ["tagged"]}}]}), 
+         { "name": ["entry with tags"], "category": ["tagged"]}}]}), 
             {
             "type": "entry",
             "name": "entry with tags",
-            "categories": ["tagged"]
+            "category": "tagged"
             })
 
 
